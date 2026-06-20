@@ -8,36 +8,6 @@ This is a Supreme Commander Forged Alliance specific language server, built on t
 
 ---
 
-## What's in this package
-
-```
-extension/
-  package.json               Extension manifest — FA config properties, semantic tokens,
-                             publisher/name, configurationDefaults
-  package.nls.json           English NLS strings for FA-specific settings
-  package.nls.*.json         Localised NLS strings (es-419, ja-jp, pt-br, zh-cn, zh-tw)
-  client/
-    src/                     TypeScript source (unmodified from upstream)
-      extension.ts           Extension entry point
-      languageserver.ts      Binary launch logic, platform detection
-      addon_manager/         Addon manager commands, panels, services
-      psi/                   PSI tree viewer
-    package.json             Client npm manifest
-    tsconfig.json
-  setting/
-    schema.json              .luarc.json schema (includes FA setting definitions)
-    schema-*.json            Localised schemas
-    setting.json             Default setting values
-  images/                    Extension icons and screenshots
-  ...
-
-patches/
-  extension_package.json.patch      Diff against upstream package.json
-  extension_package.nls.json.patch  Diff against upstream package.nls.json
-```
-
----
-
 ## FA-Specific Changes to the Extension
 
 ### `package.json`
@@ -95,6 +65,38 @@ Added NLS keys for the three new settings:
 - `config.workspace.supportScheme`
 
 ---
+
+## What's in this package
+
+```
+extension/
+  package.json               Extension manifest — FA config properties, semantic tokens,
+                             publisher/name, configurationDefaults
+  package.nls.json           English NLS strings for FA-specific settings
+  package.nls.*.json         Localised NLS strings (es-419, ja-jp, pt-br, zh-cn, zh-tw)
+  client/
+    src/                     TypeScript source (unmodified from upstream)
+      extension.ts           Extension entry point
+      languageserver.ts      Binary launch logic, platform detection
+      addon_manager/         Addon manager commands, panels, services
+      psi/                   PSI tree viewer
+    package.json             Client npm manifest
+    tsconfig.json
+  setting/
+    schema.json              .luarc.json schema (includes FA setting definitions)
+    schema-*.json            Localised schemas
+    setting.json             Default setting values
+  images/                    Extension icons and screenshots
+  ...
+
+patches/
+  extension_package.json.patch      Diff against upstream package.json
+  extension_package.nls.json.patch  Diff against upstream package.nls.json
+```
+
+---
+
+
 
 ## Building
 
