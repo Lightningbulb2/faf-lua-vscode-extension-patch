@@ -1,0 +1,30 @@
+--- modern-ext/package.nls.json	2026-06-18 02:02:05.387892254 +0000
++++ fa-modern-ext/package.nls.json	2026-06-18 02:15:37.714964980 +0000
+@@ -54,7 +54,7 @@
+     "config.diagnostics.deprecated": "Enable diagnostics to highlight deprecated API.",
+     "config.diagnostics.different-requires": "Enable diagnostics for files which are required by two different paths.",
+     "config.diagnostics.disable": "Disabled diagnostic (Use code in hover brackets).",
+-    "config.diagnostics.disableScheme": "Do not diagnose Lua files that use the following scheme.",
++    "config.diagnostics.disableScheme": "FAForever: URI schemes on which diagnostics are suppressed (e.g. `git`). Acts as the inverse of `enableScheme`.",
+     "config.diagnostics.discard-returns": "Enable diagnostics for calls of functions annotated with `---@nodiscard` where the return values are ignored.",
+     "config.diagnostics.doc-field-no-class": "Enable diagnostics to highlight a field annotation without a defining class annotation.",
+     "config.diagnostics.duplicate": "* duplicate-index\n* duplicate-set-field",
+@@ -201,6 +201,7 @@
+     "config.runtime.builtin.table.clear": "TODO: Needs documentation",
+     "config.runtime.builtin.table.new": "TODO: Needs documentation",
+     "config.runtime.builtin.utf8": "TODO: Needs documentation",
++    "config.runtime.exportEnvDefault": "FAForever: When `true`, all globals in a file are exported as env by default. Use `---@declare-global` to opt out per-file. When `false` (default), a file must contain `---@export-env` to export its globals.",
+     "config.runtime.fileEncoding": "File encoding. The `ansi` option is only available under the `Windows` platform.",
+     "config.runtime.fileEncoding.ansi": "TODO: Needs documentation",
+     "config.runtime.fileEncoding.utf16be": "TODO: Needs documentation",
+@@ -247,7 +248,7 @@
+     "config.workspace.library": "In addition to the current workspace, which directories will load files from. The files in these directories will be treated as externally provided code libraries, and some features (such as renaming fields) will not modify these files.",
+     "config.workspace.maxPreload": "Max preloaded files.",
+     "config.workspace.preloadFileSize": "Skip files larger than this value (KB) when preloading.",
+-    "config.workspace.supportScheme": "Provide language server for the Lua files of the following scheme.",
++    "config.workspace.supportScheme": "FAForever: URI schemes that the workspace will handle. Documents with schemes not in this list will be ignored by the language server.",
+     "config.workspace.useGitIgnore": "Ignore files list in `.gitignore` .",
+     "config.workspace.userThirdParty": "Add private third-party library configuration file paths here, please refer to the built-in [configuration file path](https://github.com/LuaLS/lua-language-server/tree/master/meta/3rd)"
+-}
+\ No newline at end of file
++}

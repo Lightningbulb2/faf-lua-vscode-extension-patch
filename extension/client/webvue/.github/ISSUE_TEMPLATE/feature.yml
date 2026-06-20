@@ -1,0 +1,30 @@
+name: Feature Request
+description: Request a feature be implemented
+body:
+  - type: markdown
+    attributes:
+      value: >
+        **Please check for similar issues before continuing!**
+  - type: textarea
+    id: explain
+    attributes:
+      label: Explain the feature
+      description: >
+        What is the feature? How will it work? Make a case for why it needs to
+        be implemented and what problem it solves. It is important to note that
+        we are purposefully trying to keep the webapp looking native to VS
+        Code.
+    validations:
+      required: true
+  - type: textarea
+    id: drawbacks
+    attributes:
+      label: Are there any potential drawbacks from adding the feature?
+      description: >
+        Think of any potential issues or clashes with current features.
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        Thank you very much for helping us improve! ❤️

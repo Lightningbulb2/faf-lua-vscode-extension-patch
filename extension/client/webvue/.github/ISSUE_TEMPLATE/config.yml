@@ -1,0 +1,7 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Discussions
+    url: https://github.com/LuaLS/vscode-lua-webvue/discussions
+    about: >
+      If you have a question, please instead ask it in the "Questions & Answers"
+      section on the discussions page.
