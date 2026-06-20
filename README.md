@@ -1,6 +1,5 @@
 Notice: Claude was used to read all the FAF specific functionality from [FAForever/fa-lua-vscode-extension](https://github.com/FAForever/fa-lua-vscode-extension) and build this extension for the [modern patched version](https://github.com/Lightningbulb2/faf-lua-language-server-patch).
 
-
 # FA Lua VSCode Extension
 
 This is a Supreme Commander Forged Alliance specific language server, built on the modern
@@ -46,13 +45,13 @@ is driven by client-side pattern matching from this file.
 
 The regex pattern `^\s*--+\s*#?region\b` matches all variants:
 
-| What you type | Matched? |
-|---|---|
-| `--region` | ✓ |
-| `-- region` | ✓ |
-| `--#region` | ✓ |
-| `-- #region` | ✓ |
-| `----region` *(post-FA-plugin form of `--#region`)* | ✓ |
+| What you type                                       | Matched? |
+| --------------------------------------------------- | -------- |
+| `--region`                                          | ✓        |
+| `-- region`                                         | ✓        |
+| `--#region`                                         | ✓        |
+| `-- #region`                                        | ✓        |
+| `----region` _(post-FA-plugin form of `--#region`)_ | ✓        |
 
 Without this file, VS Code ignores the `kind: "region"` responses from the server for
 comment-based folds and `-- #region` appears as a normal comment with no fold gutter icon.
@@ -60,6 +59,7 @@ comment-based folds and `-- #region` appears as a normal comment with no fold gu
 ### `package.nls.json`
 
 Added NLS keys for the three new settings:
+
 - `config.runtime.exportEnvDefault`
 - `config.diagnostics.disableScheme`
 - `config.workspace.supportScheme`
@@ -96,17 +96,15 @@ patches/
 
 ---
 
-
-
 ## Building
 
 ### Prerequisites
 
-| Tool | Version | Notes |
-|---|---|---|
-| Node.js | ≥ 18 | |
-| npm | ≥ 9 | Bundled with Node |
-| `@vscode/vsce` | latest | `npm install -g @vscode/vsce` |
+| Tool           | Version | Notes                         |
+| -------------- | ------- | ----------------------------- |
+| Node.js        | ≥ 18    |                               |
+| npm            | ≥ 9     | Bundled with Node             |
+| `@vscode/vsce` | latest  | `npm install -g @vscode/vsce` |
 
 ### Step 1 — Clone the upstream extension
 
@@ -161,14 +159,14 @@ npm run build
 ### Step 6 — Assemble the server directory
 
 The extension expects `server/` to contain the language server binary and Lua scripts.
-Build those from `fa-lua-language-server-patches.zip`, then:
+Build those from `fa-lua-language-server-patches.zip`, then copy them in:
 
 ```sh
 LS=/path/to/built/lua-language-server
 
 mkdir -p server/bin
 
-# Lua scripts
+# Lua scripts (same for all platforms)
 cp $LS/main.lua      server/
 cp $LS/debugger.lua  server/
 cp $LS/changelog.md  server/
@@ -177,16 +175,36 @@ cp -r $LS/locale     server/locale
 cp -r $LS/script     server/script
 cp -r $LS/meta       server/meta
 
-# Binaries
-cp $LS/bin/lua-language-server                          server/bin/lua-language-server
+# REQUIRED: bin/main.lua — the exe bootstraps by loading this from its own directory.
+# This is make/bootstrap.lua from the LS repo. It is NOT the same as server/main.lua.
+cp $LS/bin/main.lua  server/bin/main.lua
+```
+
+Then add the platform binaries. Include all platforms you want to support:
+
+**Linux binary** (built on Linux with `luamake rebuild`):
+
+```sh
+cp $LS/bin/lua-language-server  server/bin/lua-language-server
+```
+
+**Windows binary — built natively on Windows** (`luamake.exe rebuild`, requires Visual Studio):
+
+```sh
+# Copy the exe and all DLLs from bin/ (includes MSVC runtime DLLs)
+cp $LS/bin/lua-language-server.exe  server/bin/lua-language-server.exe
+cp $LS/bin/*.dll                    server/bin/
+```
+
+**Windows binary — cross-compiled from Linux** (mingw, no MSVC runtime needed):
+
+```sh
 cp $LS/build/win32/bin/lua-language-server.exe          server/bin/lua-language-server.exe
-cp $LS/bin/main.lua                                     server/bin/main.lua
 cp /usr/x86_64-w64-mingw32/lib/libwinpthread-1.dll      server/bin/libwinpthread-1.dll
 ```
 
-> **`server/bin/main.lua` is required.** The binary bootstraps by loading `main.lua`
-> from its own directory. This is `make/bootstrap.lua` from the language server repo —
-> it is **not** the same as `server/main.lua`.
+The extension auto-selects the right binary at runtime via `os.platform()`, so you can
+include all of them in the same VSIX for a cross-platform package.
 
 ### Step 7 — Package
 
@@ -198,6 +216,7 @@ vsce package --no-dependencies
 Output: `lua-fa-3.18.2.vsix`
 
 Install:
+
 ```sh
 code --install-extension lua-fa-3.18.2.vsix
 ```
