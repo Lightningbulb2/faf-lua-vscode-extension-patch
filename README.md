@@ -1,7 +1,7 @@
 Notice: Claude was used to read all the FAF specific functionality from [FAForever/fa-lua-vscode-extension](https://github.com/FAForever/fa-lua-vscode-extension) and build this extension for the [modern patched version](https://github.com/Lightningbulb2/faf-lua-language-server-patch).
 
 
-# FA Lua VS Code Extension — Source
+# FA Lua VSCode Extension
 
 This package contains the complete source for the **Lua FA** VS Code extension
 (publisher: `FAForever`, id: `lua-fa`), built on the modern
