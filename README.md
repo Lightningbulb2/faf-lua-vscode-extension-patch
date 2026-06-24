@@ -81,9 +81,11 @@ git submodule update --init --recursive
 SRC="/your/path/to/faf-lua-vscode-extension-patch"
 
 # Apply the two modified manifests
-patch -p1 < "$SRC/patches/extension_package.json.patch"
-patch -p1 < "$SRC/patches/extension_package.nls.json.patch"
+patch -p1 < "$SRC/patches/package.json.patch"
+patch -p1 < "$SRC/patches/package.nls.json.patch"
 ```
+
+### Alternative Step 3
 
 Or copy them directly:
 
@@ -114,26 +116,25 @@ npm run build
 ### Step 6 — Assemble the server directory
 
 The extension expects `server/` to contain the language server binary and Lua scripts.
-Build those from `fa-lua-language-server-patches.zip`, then copy them in:
+Build those from `faf-lua-language-server-patch`, then copy them in:
 
 ```sh
+# Current working directory: /your/path/to/vscode-lua
 LS="/your/path/to/built/lua-language-server"
-
-mkdir -p server/bin
 
 # Lua scripts (same for all platforms)
 cp $LS/main.lua      server/
 cp $LS/debugger.lua  server/
 cp $LS/changelog.md  server/
 cp $LS/LICENSE       server/
-cp -r $LS/locale     server/locale
-cp -r $LS/script     server/script
-cp -r $LS/meta       server/meta
-
-# REQUIRED: bin/main.lua — the exe bootstraps by loading this from its own directory.
-# This is make/bootstrap.lua from the LS repo. It is NOT the same as server/main.lua.
-cp $LS/bin/main.lua  server/bin/main.lua
+cp -r $LS/locale     server/
+cp -r $LS/script     server/
+cp -r $LS/meta       server/
+cp -r $LS/bin        server/
 ```
+
+> you may notice: bin/main.lua — the exe bootstraps by loading this from its own directory.
+> This is make/bootstrap.lua from the LS repo. It is NOT the same as server/main.lua.
 
 Then add the platform binaries. Include all platforms you want to support:
 
@@ -145,11 +146,9 @@ cp $LS/bin/lua-language-server  server/bin/lua-language-server
 
 **Windows binary — built natively with MSVC** (requires Visual Studio):
 
-```sh
-# Copy exe and all DLLs (MSVC runtime: msvcp140.dll, vcruntime140.dll, etc.)
-cp $LS/bin/lua-language-server.exe  server/bin/lua-language-server.exe
-cp $LS/bin/*.dll                    server/bin/
-```
+<mark>ALREADY COPIED THE WHOLE BIN IN THE PREVIOUS COMMAND, CONTINUE</mark>
+
+> includes exe and all DLLs (MSVC runtime: msvcp140.dll, vcruntime140.dll, etc.)
 
 **Windows binary — cross-compiled from Linux with mingw** (no MSVC runtime, just one DLL):
 
@@ -159,7 +158,7 @@ cp /usr/x86_64-w64-mingw32/lib/libwinpthread-1.dll      server/bin/libwinpthread
 ```
 
 The extension auto-selects the right binary at runtime via `os.platform()`, so include
-all platforms in the same `server/bin/` for a universal VSIX. See the language server
+all platforms in the same `server/bin/` for a universal VSIX. See the [language server](https://github.com/Lightningbulb2/faf-lua-language-server-patch)
 README for full instructions on building Linux binaries from Windows (WSL2, Docker, or
 GitHub Actions).
 
@@ -203,8 +202,8 @@ which bootstraps the Lua VM and loads `server/main.lua` as the entry point.
 
 ```
 patches/
-  extension_package.json.patch      Diff against upstream package.json
-  extension_package.nls.json.patch  Diff against upstream package.nls.json
+  package.json.patch      Diff against upstream package.json
+  package.nls.json.patch  Diff against upstream package.nls.json
 
 package.nls.json - already patched version
 package.json - already patched version
