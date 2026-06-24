@@ -15,7 +15,7 @@
  					],
  					"markdownDescription": "%config.runtime.version%",
  					"markdownEnumDescriptions": [
-+						"**FAForever**: FA's custom Lua 5.0/5.1-era runtime. Enables `table.getn`, `table.empty`, `continue`, `!=`, `arg` vararg table, and the FA class sy
++						"**FAForever**: FA's custom Lua 5.0/5.1-era runtime. Enables `table.getn`, `table.empty`, `continue`, `!=`, `arg` vararg table, and the FA class system without deprecation warnings. Set automatically by the FA type library.",
  						"%config.runtime.version.Lua 5.1%",
  						"%config.runtime.version.Lua 5.2%",
  						"%config.runtime.version.Lua 5.3%",
@@ -78,15 +78,6 @@
  			}
  		},
  		"jsonValidation": [
-@@ -3293,7 +3338,7 @@
- 				"extensions": [
- 					".lua"
- 				],
--				"id": "lua"
-+				"id": "lua",
- 			},
- 			{
- 				"filenames": [
 @@ -3439,13 +3484,16 @@
  					],
  					"variable.readonly": [
